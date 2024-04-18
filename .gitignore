@@ -6,7 +6,7 @@
 .env
 env.ts
 
-private.pem
+private;.pem
 public.pem
 
 # Logs
