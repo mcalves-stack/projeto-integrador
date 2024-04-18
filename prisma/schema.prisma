@@ -18,5 +18,89 @@ model User {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
+  person HomePage[]
+
   @@map("register_admin")
+}
+
+model HomePage {
+  id        String    @id @default(uuid())
+  adminId   String    @map("admin_id")
+  contactId String    @map("contact_id")
+  familyId  String    @map("family_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  admin   User    @relation(fields: [adminId], references: [id])
+  contact Contact @relation(fields: [contactId], references: [id])
+  family  Family  @relation(fields: [familyId], references: [id])
+
+  @@map("home")
+}
+
+model Contact {
+  id        String    @id @default(uuid())
+  user      String
+  email     String    @unique
+  phone     String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  contact HomePage[]
+
+  @@map("contact")
+}
+
+model Family {
+  id            String    @id @default(uuid())
+  user          String
+  date          DateTime  @default(now()) @map("record_date")
+  amountPeople  Int
+  phone         String
+  familyIncome  Float
+  cestasBasicas Int
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+
+  family HomePage[]
+
+  @@map("family")
+}
+
+model Food {
+  id          String    @id @default(uuid())
+  inventoryId Int       @map("inventory_id")
+  name        String
+  quantity    Int
+  unitType    String
+  category    String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  @@map("foods")
+}
+
+model Cloth {
+  id          String    @id @default(uuid())
+  inventoryId Int       @map("inventory_id")
+  name        String
+  quantity    Int
+  size        String
+  category    String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  @@map("clothes")
+}
+
+model Material {
+  id          String    @id @default(uuid())
+  inventoryId Int       @map("inventory_id")
+  name        String
+  quantity    Int
+  category    String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  @@map("materials")
 }

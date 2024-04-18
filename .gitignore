@@ -2,6 +2,13 @@
 /dist
 /node_modules
 
+# local env
+.env
+env.ts
+
+private;.pem
+public.pem
+
 # Logs
 logs
 *.log
@@ -37,5 +44,3 @@ lerna-debug.log*
 docker-compose.yml
 Dockerfile
 
-.env
-.env.ts
