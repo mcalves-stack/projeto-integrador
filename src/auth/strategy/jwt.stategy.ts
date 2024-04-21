@@ -4,6 +4,14 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Env } from "src/Env";
 import { PrismaService } from "src/prisma/prisma.service";
+import { z } from "zod";
+
+const tokenPayloadSchema = z.object({
+  sub: z.string().uuid(),
+  email: z.string().email()
+})
+
+export type UserPayload = z.infer<typeof tokenPayloadSchema>
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -21,18 +29,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     })
   }
 
-  async validate(payload: {
-    sub: string;
-    email: string;
-    name: string;
-  }) {
-    const user = this.prisma.user.findUnique({
-      where: { 
-        id: payload.sub 
-      }
-    })
-    delete (await user).password;
-    return user;
+  async validate(payload: UserPayload) {
+    return tokenPayloadSchema.parse(payload)
   }
-
 }

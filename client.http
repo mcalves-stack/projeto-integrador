@@ -1,0 +1,62 @@
+@baseUrl = http://localhost:3333
+@UrlToken = {{authenticate.response.body.access_token}}
+
+###
+
+# @name create-account
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+    "name": "teste",
+    "email": "teste123@ghmail.com",
+    "password": "afawfwafwa",
+    "lastname":  "silva",
+    "phone": "123456789"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/auth/signin
+Content-Type: application/json
+
+{
+  "name": "teste",
+  "email": "teste12@ghmail.com",
+  "password": "afawfwafwa"
+}
+
+###
+
+# @name FindAllUsers
+GET  {{baseUrl}}/users
+Content-Type: application/json
+
+###
+
+# @name FindUserById
+GET {{baseUrl}}/users/46fff8d6-e5e8-4833-a59b-ab3519ec0988
+Content-Type: application/json
+
+###
+
+# @name updateUser
+PATCH {{baseUrl}}/users/46fff8d6-e5e8-4833-a59b-ab3519ec0988
+Content-Type: application/json
+
+{
+    "name": "Carlos1",
+    "email": "carlosmaia3123@ghmail.com",
+    "password": "nfienesiofn",
+    "lastname":  "silva",
+    "phone": "23432444343242",
+    "role": "admin"
+}
+
+
+###
+
+# @name DeleteUser
+DELETE  {{baseUrl}}/users/e9781ce0-8355-4e3a-b358-d8c05be98cad
+Content-Type: application/json

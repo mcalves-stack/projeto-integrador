@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { envSchema } from './Env';
 import { UserModule } from './user/user.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,7 +13,8 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
     }), 
     AuthModule, 
-    PrismaModule, UserModule,
+    PrismaModule, 
+    UserModule,
   ],
   controllers: [],
   providers: [],

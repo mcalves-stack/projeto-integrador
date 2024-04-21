@@ -20,7 +20,7 @@ model User {
 
   person HomePage[]
 
-  @@map("register_admin")
+  @@map("users")
 }
 
 model HomePage {

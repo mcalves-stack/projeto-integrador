@@ -45,7 +45,6 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { 
         email: dto.email,
-        name: dto.name
       }
     })
 
@@ -60,18 +59,16 @@ export class AuthService {
       throw new UnauthorizedException('User credentials do not match.');
     }
 
-    return this.signToken(user.id, user.email, user.name);
+    return this.signToken(user.id, user.email);
   }
 
   async signToken(
     id: string, 
     email: string, 
-    name: string
     ) {
     const accessToken = this.jwt.sign({ 
       sub: id,
       email,
-      name
     })
 
     return {
