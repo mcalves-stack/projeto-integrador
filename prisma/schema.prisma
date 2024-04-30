@@ -18,51 +18,34 @@ model User {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
-  person HomePage[]
-
   @@map("users")
 }
 
-model HomePage {
-  id        String    @id @default(uuid())
-  adminId   String    @map("admin_id")
-  contactId String    @map("contact_id")
-  familyId  String    @map("family_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
-
-  admin   User    @relation(fields: [adminId], references: [id])
-  contact Contact @relation(fields: [contactId], references: [id])
-  family  Family  @relation(fields: [familyId], references: [id])
-
-  @@map("home")
-}
-
-model Contact {
+model ContactFamily {
   id        String    @id @default(uuid())
   user      String
   email     String    @unique
   phone     String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
+  Family    Family?   @relation(fields: [familyId], references: [id])
+  familyId  String?
 
-  contact HomePage[]
-
-  @@map("contact")
+  @@map("contactsfamilys")
 }
 
 model Family {
-  id            String    @id @default(uuid())
-  user          String
-  date          DateTime  @default(now()) @map("record_date")
-  amountPeople  Int
-  phone         String
-  familyIncome  Float
-  cestasBasicas Int
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime? @updatedAt @map("updated_at")
+  id           String    @id @default(uuid())
+  user         String
+  amountPeople Int
+  phone        String
+  cpf          String    @unique
+  familyIncome Float
+  foodStamps   Int
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
 
-  family HomePage[]
+  ContactFamily ContactFamily[]
 
   @@map("family")
 }

@@ -12,7 +12,7 @@ Content-Type: application/json
     "email": "teste123@ghmail.com",
     "password": "afawfwafwa",
     "lastname":  "silva",
-    "phone": "123456789"
+    "phone": "1123456789"
 }
 
 ###
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "name": "teste",
-  "email": "teste12@ghmail.com",
+  "email": "teste123@ghmail.com",
   "password": "afawfwafwa"
 }
 
@@ -32,31 +32,83 @@ Content-Type: application/json
 # @name FindAllUsers
 GET  {{baseUrl}}/users
 Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
 
 ###
 
 # @name FindUserById
 GET {{baseUrl}}/users/46fff8d6-e5e8-4833-a59b-ab3519ec0988
 Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
 
 ###
 
 # @name updateUser
 PATCH {{baseUrl}}/users/46fff8d6-e5e8-4833-a59b-ab3519ec0988
 Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
 
 {
-    "name": "Carlos1",
-    "email": "carlosmaia3123@ghmail.com",
+    "name": "Lucas Maia",
+    "email": "LUCASmaia3123@ghmail.com",
     "password": "nfienesiofn",
     "lastname":  "silva",
     "phone": "23432444343242",
     "role": "admin"
 }
 
-
 ###
 
 # @name DeleteUser
 DELETE  {{baseUrl}}/users/e9781ce0-8355-4e3a-b358-d8c05be98cad
 Content-Type: application/json
+
+###
+
+# @name create-family
+POST {{baseUrl}}/family
+Content-Type: application/json
+
+{
+    "user": "family1",
+    "amountPeople": 40,
+    "phone": "11948955365",
+    "cpf": "12345678910",
+    "familyIncome": 40,
+    "foodStamps": 40
+}
+
+###
+
+# @name FindAllFamily
+GET  {{baseUrl}}/family
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+###
+
+# @name FindFamilyById
+GET {{baseUrl}}/family/12345678910
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+###
+
+PATCH {{baseUrl}}/family/12345678910
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+{
+    "user": "Carina Peres",
+    "amountPeople": 20,
+    "phone": "11948955365",
+    "cpf": "12345648910",
+    "familyIncome": 20,
+    "foodStamps": 60
+}
+
+###
+
+DELETE {{baseUrl}}/family/c81443c5-897f-4c09-96a5-1902f8fa5520
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
