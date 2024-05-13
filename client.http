@@ -37,7 +37,7 @@ Authorization: Bearer {{UrlToken}}
 ###
 
 # @name FindUserById
-GET {{baseUrl}}/users/46fff8d6-e5e8-4833-a59b-ab3519ec0988
+GET {{baseUrl}}/users/f5efd8c7-01b7-415f-a053-e4b11098f1b0
 Content-Type: application/json
 Authorization: Bearer {{UrlToken}}
 
@@ -68,6 +68,7 @@ Content-Type: application/json
 # @name create-family
 POST {{baseUrl}}/family
 Content-Type: application/json
+Authorization: Bearer {{{{UrlToken}}}}
 
 {
     "user": "family1",

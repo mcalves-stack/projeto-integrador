@@ -1,29 +1,35 @@
-import { IsInt, IsNotEmpty, IsNumber, IsString, Length, MaxLength } from "class-validator";
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Length,
+  MaxLength,
+} from 'class-validator'
 
 export class UpdateFamilyDto {
   @IsNotEmpty()
   @IsString()
-  user: string;
+  user: string
 
   @IsNotEmpty()
   @IsNumber()
-  amountPeople: number;
+  amountPeople: number
 
   @IsNotEmpty()
   @IsString()
   @MaxLength(11)
-  cpf: string;
+  cpf: string
 
   @IsNotEmpty()
   @IsString()
   @Length(0, 11)
-  phone: string;
+  phone: string
 
   @IsNotEmpty()
   @IsNumber()
-  familyIncome: number;
+  familyIncome: number
 
   @IsNotEmpty()
   @IsNumber()
-  foodStamps: number;
+  foodStamps: number
 }

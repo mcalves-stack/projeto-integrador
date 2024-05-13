@@ -1,82 +1,105 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateFamilyDto } from './dto/create-family.dto';
-import { UpdateFamilyDto } from './dto/update-family.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
+import { CreateFamilyDto } from './dto/create-family.dto'
+import { UpdateFamilyDto } from './dto/update-family.dto'
+import { PrismaService } from 'src/prisma/prisma.service'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 @Injectable()
 export class FamilyService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateFamilyDto) {
-    const FamilyWithSamCpf = await this.prisma.family.findUnique({
-      where: { cpf: dto.cpf }
-    })
+    try {
+      const existingFamily = await this.prisma.family.findUnique({
+        where: { cpf: dto.cpf },
+      })
 
-    if(FamilyWithSamCpf) {
-      throw new ConflictException('There is already a family with the same CPF');
-    }
-    
-
-    const family = await this.prisma.family.create({
-      data: {
-        user: dto.user,
-        amountPeople: dto.amountPeople,
-        phone: dto.phone,
-        cpf : dto.cpf,
-        familyIncome: dto.familyIncome,
-        foodStamps: dto.foodStamps,
+      if (existingFamily) {
+        throw new ConflictException(
+          `There is already a family with CPF: ${dto.cpf}`,
+        )
       }
-    })
 
-    return family;
+      return await this.prisma.family.create({
+        data: {
+          user: dto.user,
+          amountPeople: dto.amountPeople,
+          phone: dto.phone,
+          cpf: dto.cpf,
+          familyIncome: dto.familyIncome,
+          foodStamps: dto.foodStamps,
+        },
+      })
+    } catch (error) {
+      // Log error or handle specific database-related errors if needed
+      throw new NotFoundException('Failed to create family record.', error)
+    }
   }
 
   async findAll() {
-    const families = await this.prisma.family.findFirst();
-
-    return families;
+    try {
+      return await this.prisma.family.findMany()
+    } catch (error) {
+      throw new NotFoundException('Failed to retrieve families.', error)
+    }
   }
 
   async findOne(cpf: string) {
-    const family = await this.prisma.family.findUnique({
-      where: { 
-        cpf 
-      } 
-    });
+    try {
+      const family = await this.prisma.family.findUnique({
+        where: { cpf },
+      })
 
-    return family;
+      if (!family) {
+        throw new NotFoundException(`Family with CPF ${cpf} not found.`)
+      }
+
+      return family
+    } catch (error) {
+      throw new NotFoundException(
+        `Failed to retrieve family with CPF ${cpf}.`,
+        error,
+      )
+    }
   }
 
-  async update(
-    cpf: string, 
-    dto: UpdateFamilyDto
-  ) {
-    const updateFamily = await this.prisma.family.update({
-      where: {
-        cpf
-      },
-      data: {
-        ...dto
+  async update(cpf: string, dto: UpdateFamilyDto) {
+    try {
+      return await this.prisma.family.update({
+        where: { cpf },
+        data: dto,
+      })
+    } catch (error) {
+      if (
+        error instanceof PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(
+          `No family found with CPF ${cpf} to update.`,
+        )
       }
-    });
-
-    return updateFamily;
+      throw new NotFoundException('Failed to update family.', error)
+    }
   }
 
   async remove(id: string) {
     try {
-      const family = await this.prisma.family.delete({
-        where: { id }
-      });
-      return "family deleted successfully.";
+      await this.prisma.family.delete({
+        where: { id },
+      })
+      return 'Family deleted successfully.'
     } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
-        if (error.code === 'P2025') { 
-          throw new NotFoundException(`No record found for ID ${id}.`);
-        }
+      if (
+        error instanceof PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`No record found for ID ${id}.`)
       }
-      throw error; 
+      throw new NotFoundException('Failed to delete family.', error)
     }
   }
 }
