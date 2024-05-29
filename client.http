@@ -6,6 +6,7 @@
 # @name create-account
 POST {{baseUrl}}/auth/signup
 Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
 
 {
     "name": "teste",

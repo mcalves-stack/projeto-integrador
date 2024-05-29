@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config'
 import { envSchema } from './Env'
 import { UserModule } from './user/user.module'
 import { FamilyModule } from './family/family.module'
+import { ContactFamilyModule } from './contact-family/contact-family.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FamilyModule } from './family/family.module'
     PrismaModule,
     UserModule,
     FamilyModule,
+    ContactFamilyModule,
   ],
   controllers: [],
   providers: [],
