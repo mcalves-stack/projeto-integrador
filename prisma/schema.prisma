@@ -87,3 +87,16 @@ model Material {
 
   @@map("materials")
 }
+
+model Stock {
+  id           String    @id @default(uuid())
+  name         String
+  type         String
+  quantity     Int
+  size         String
+  availability Int
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+
+  @@map("stocks")
+}

@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface User {
   password: string
 }

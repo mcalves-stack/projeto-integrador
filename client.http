@@ -63,13 +63,14 @@ Authorization: Bearer {{UrlToken}}
 # @name DeleteUser
 DELETE  {{baseUrl}}/users/e9781ce0-8355-4e3a-b358-d8c05be98cad
 Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
 
 ###
 
 # @name create-family
 POST {{baseUrl}}/family
 Content-Type: application/json
-Authorization: Bearer {{{{UrlToken}}}}
+Authorization: Bearer {{UrlToken}}
 
 {
     "user": "family1",
@@ -114,3 +115,54 @@ Authorization: Bearer {{UrlToken}}
 DELETE {{baseUrl}}/family/c81443c5-897f-4c09-96a5-1902f8fa5520
 Content-Type: application/json
 Authorization: Bearer {{UrlToken}}
+
+
+### Stock
+
+# @name create-stock
+POST {{baseUrl}}/stock
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+{
+    "name": "Blusa Preta",
+    "type": "roupa",
+    "quantity": 3,
+    "size":  "GG",
+    "availability": 54
+}
+
+###
+
+# @name FindAllStock
+GET  {{baseUrl}}/stock
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+###
+
+# @name FindStockById
+GET {{baseUrl}}/stock/7d353708-2b07-4ed5-90f0-e8ea13a84b3d
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+###
+
+PATCH {{baseUrl}}/stock/7d353708-2b07-4ed5-90f0-e8ea13a84b3d
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+
+{
+    "name": "Blusa Amarela",
+    "type": "roupa",
+    "quantity": 5,
+    "size":  "G",
+    "availability": 56
+}
+
+###
+
+DELETE {{baseUrl}}/stock/fab5fdb0-d316-4b8b-abbc-e4af6a3c07a8
+Content-Type: application/json
+Authorization: Bearer {{UrlToken}}
+

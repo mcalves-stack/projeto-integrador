@@ -6,6 +6,7 @@ import { envSchema } from './Env'
 import { UserModule } from './user/user.module'
 import { FamilyModule } from './family/family.module'
 import { ContactFamilyModule } from './contact-family/contact-family.module'
+import { StockModule } from './stock/stock.module'
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ContactFamilyModule } from './contact-family/contact-family.module'
     PrismaModule,
     UserModule,
     FamilyModule,
+    StockModule,
     ContactFamilyModule,
   ],
   controllers: [],
